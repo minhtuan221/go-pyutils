@@ -1,4 +1,4 @@
-package IntList
+package pyIntList
 
 import (
 	"fmt"

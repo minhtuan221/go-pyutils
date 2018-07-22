@@ -1,70 +1,69 @@
-package main
+package pyList
 
 import (
 	"fmt"
-	// "sort"
 )
 
 type List struct {
 	List []interface{}
 }
 
-func (List *List) Append(x interface{}) {
-	List.List = append(List.List, x)
+func (list *List) Append(x interface{}) {
+	list.List = append(list.List, x)
 }
 
-func (List *List) Extend(x []interface{}) {
-	List.List = append(List.List, x...)
+func (list *List) Extend(x []interface{}) {
+	list.List = append(list.List, x...)
 }
 
-func (List *List) Insert(i int, x interface{}) {
+func (list *List) Insert(i int, x interface{}) {
 
 	// Make space in the array for a new element. You can assign it any value.
-	List.List = append(List.List, 0)
+	list.List = append(list.List, 0)
 
 	// Copy over elements sourced from index 2, into elements starting at index 3.
-	copy(List.List[i+1:], List.List[i:])
+	copy(list.List[i+1:], list.List[i:])
 
 	// assign value to index
-	List.List[i] = x
+	list.List[i] = x
 }
 
-func (List *List) Remove(x interface{}) {
+func (list *List) Remove(x interface{}) {
 	// find value of x
-	for i, value := range List.List {
+	for i, value := range list.List {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
-			List.List = append(List.List[:i], List.List[i+1:]...)
+			list.List = append(list.List[:i], list.List[i+1:]...)
 			break
 		}
 	}
 }
 
-func (List *List) Pop(x ...int) interface{} {
-	k := len(List.List) - 1
+func (list *List) Pop(x ...int) interface{} {
+	k := len(list.List) - 1
 	if len(x) == 0 {
 		// make a copy of last item
-		res := List.List[k]
+		res := list.List[k]
 		// remove the last item in list
-		List.List = append(List.List[:k], List.List[k+1:]...)
+		list.List = append(list.List[:k], list.List[k+1:]...)
 		return res
 	} else {
 		i := x[0]
-		res := List.List[i]
+		res := list.List[i]
 		// remove item in index i
-		List.List = append(List.List[:i], List.List[i+1:]...)
+		list.List = append(list.List[:i], list.List[i+1:]...)
 		return res
 	}
 }
 
-func (List *List) Clear() {
-	List.List = nil
+func (list *List) Clear() {
+	list.List = nil
 }
 
-func (mList *List) Index(x interface{}) []interface{} {
+func (list *List) Index(x interface{}) []interface{} {
 	// find value of x
 	var res []interface{}
-	for i, value := range mList.List {
+	for i, value := range list.List {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res = append(res, i)
@@ -73,10 +72,10 @@ func (mList *List) Index(x interface{}) []interface{} {
 	return res
 }
 
-func (List *List) Count(x interface{}) interface{} {
+func (list *List) Count(x interface{}) interface{} {
 	// find value of x
 	res := 0
-	for _, value := range List.List {
+	for _, value := range list.List {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res++
@@ -85,19 +84,23 @@ func (List *List) Count(x interface{}) interface{} {
 	return res
 }
 
-// func (List *List) Sort() {
-// 	sort.Sort(sort.IntSlice(List.List))
+// func (list *List) Sort() {
+// 	switch expression {
+// 	case condition:
+
+// 	}
+// 	sort.Sort(sort.IntSlice(list.List))
 // }
 
 // func (List *List) Reverse() {
 // 	sort.Sort(sort.Reverse(sort.IntSlice(List.List)))
 // }
 
-func (mList *List) Copy() List {
+func (list *List) Copy() List {
 	res := List{}
 	// process a deepcopy
-	res.List = make([]interface{}, len(mList.List))
-	copy(res.List, mList.List)
+	res.List = make([]interface{}, len(list.List))
+	copy(res.List, list.List)
 	return res
 }
 
@@ -105,7 +108,7 @@ type test struct {
 	value int
 }
 
-func main() {
+func TestList() {
 	// var dataSlice []int = foo()
 	var interfaceSlice []interface{} = make([]interface{}, 3)
 	for i, d := range []int{1, 2, 3} {
@@ -114,7 +117,7 @@ func main() {
 	var x List = List{}
 	// fmt.Println(x)
 	for _, value := range []int{5, 6, 7, 8, 9} {
-		x.Append(value)
+		x.Append(test{value})
 	}
 	fmt.Println(x)
 	for i, d := range []int{10, 11, 13} {
