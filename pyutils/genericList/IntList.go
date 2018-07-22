@@ -1,4 +1,4 @@
-package pyIntList
+package genericList
 
 import (
 	"fmt"
@@ -57,6 +57,10 @@ func (intlist *IntList) Pop(x ...int) int {
 	}
 }
 
+func (intlist *IntList) Popleft() {
+	intlist.Pop(0)
+}
+
 func (intlist *IntList) Clear() {
 	intlist.List = nil
 }
@@ -101,7 +105,7 @@ func (intlist *IntList) Copy() IntList {
 	return res
 }
 
-func main() {
+func TestInt() {
 	x := IntList{[]int{1, 2, 3}}
 	// fmt.Println(x)
 	for _, value := range []int{5, 6, 7, 8, 9} {

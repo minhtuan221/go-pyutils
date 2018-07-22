@@ -56,6 +56,10 @@ func (list *List) Pop(x ...int) interface{} {
 	}
 }
 
+func (list *List) Popleft() {
+	list.Pop(0)
+}
+
 func (list *List) Clear() {
 	list.List = nil
 }
@@ -84,24 +88,16 @@ func (list *List) Count(x interface{}) interface{} {
 	return res
 }
 
-// func (list *List) Sort() {
-// 	switch expression {
-// 	case condition:
-
-// 	}
-// 	sort.Sort(sort.IntSlice(list.List))
-// }
-
-// func (List *List) Reverse() {
-// 	sort.Sort(sort.Reverse(sort.IntSlice(List.List)))
-// }
-
 func (list *List) Copy() List {
 	res := List{}
 	// process a deepcopy
 	res.List = make([]interface{}, len(list.List))
 	copy(res.List, list.List)
 	return res
+}
+
+func (list *List) Len() int {
+	return len(list.List)
 }
 
 type test struct {
@@ -140,6 +136,9 @@ func TestList() {
 
 	fmt.Println(x.Index(9))
 	fmt.Println(x.Count(9))
+
+	fmt.Println(x.Count(test{9}))
+	fmt.Println(x.Len())
 
 	// x.Sort()
 	// fmt.Println(x)
