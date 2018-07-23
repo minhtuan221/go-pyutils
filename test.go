@@ -1,21 +1,21 @@
 package main
 
 import (
-	"Pyutils/pyutils/PyList"
+	pylist "Pyutils/pyutils/Pylist"
 	"Pyutils/pyutils/genericList"
 	"fmt"
 )
 
 func main() {
 	fmt.Println("Your test is here: ")
-	var x pyList.List
+	var x pylist.List
 	// = PyList.List{}
 	// fmt.Println(x)
 	for _, value := range []int{5, 6, 7, 8, 9} {
 		x.Append(value)
 	}
 	fmt.Println(x)
-	pyList.TestList()
+	pylist.TestList()
 	fmt.Println("End of test list Interface: ")
 	fmt.Println("Start of test list Integer: ")
 	genericList.TestInt()
@@ -23,5 +23,7 @@ func main() {
 	genericList.TestFloat()
 	fmt.Println("Start of test list String: ")
 	genericList.TestString()
+	fmt.Println("Start of test Dict: ")
+	pylist.TestDict()
 	// blockchain.PrettyPrint(balance)
 }

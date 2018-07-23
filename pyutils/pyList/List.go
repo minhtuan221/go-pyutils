@@ -1,4 +1,4 @@
-package pyList
+package pylist
 
 import (
 	"fmt"
@@ -6,10 +6,15 @@ import (
 
 type iterable interface {
 	Len() int
+	IfKeyIn(key interface{}) bool
 }
 
 func Len(list iterable) int {
 	return list.Len()
+}
+
+func IfKeyIn(key interface{}, list iterable) bool {
+	return list.IfKeyIn(key)
 }
 
 type List struct {
@@ -55,13 +60,12 @@ func (list *List) Pop(x ...int) interface{} {
 		// remove the last item in list
 		list.List = append(list.List[:k], list.List[k+1:]...)
 		return res
-	} else {
-		i := x[0]
-		res := list.List[i]
-		// remove item in index i
-		list.List = append(list.List[:i], list.List[i+1:]...)
-		return res
 	}
+	i := x[0]
+	res := list.List[i]
+	// remove item in index i
+	list.List = append(list.List[:i], list.List[i+1:]...)
+	return res
 }
 
 func (list *List) Popleft() {
@@ -82,6 +86,17 @@ func (list *List) Index(x interface{}) []int {
 		}
 	}
 	return res
+}
+
+func (list List) IfKeyIn(x interface{}) bool {
+	// find value of x
+	for _, value := range list.List {
+		if value == x {
+			// Where a is the slice, and i is the index of the element you want to delete:
+			return true
+		}
+	}
+	return false
 }
 
 func (list *List) Count(x interface{}) int {
@@ -114,11 +129,11 @@ type test struct {
 
 func TestList() {
 	// var dataSlice []int = foo()
-	var interfaceSlice []interface{} = make([]interface{}, 3)
+	interfaceSlice := make([]interface{}, 3)
 	for i, d := range []int{1, 2, 3} {
 		interfaceSlice[i] = d
 	}
-	var x List = List{}
+	x := List{}
 	// fmt.Println(x)
 	for _, value := range []int{5, 6, 7, 8, 9} {
 		x.Append(test{value})
@@ -147,6 +162,7 @@ func TestList() {
 
 	fmt.Println(x.Count(test{9}))
 	fmt.Println(x.Len())
+	fmt.Println("If key 9 in:", IfKeyIn(9, x))
 
 	// x.Sort()
 	// fmt.Println(x)
