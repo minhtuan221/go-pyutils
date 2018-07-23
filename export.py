@@ -1,6 +1,9 @@
 from distutils.dir_util import copy_tree
 import os
 
+x = dict()
+# x.
+
 
 def ExportGo(Gopath="/Users/minhtuannguyen/go/src/"):
     # Get current dir

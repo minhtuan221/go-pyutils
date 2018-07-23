@@ -105,6 +105,10 @@ func (stringlist *StringList) Copy() StringList {
 	return res
 }
 
+func (stringlist StringList) Len() int {
+	return len(stringlist.List)
+}
+
 func TestString() {
 	x := StringList{[]string{"Minh", "Tuan", "nguyen"}}
 	// fmt.Println(x)
@@ -138,6 +142,7 @@ func TestString() {
 	// check copy list
 	c.Append("- some thing else")
 	fmt.Println(c)
+	fmt.Println(Len(c))
 
 	x.Clear()
 	fmt.Println(x)

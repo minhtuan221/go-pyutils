@@ -105,6 +105,10 @@ func (intlist *IntList) Copy() IntList {
 	return res
 }
 
+func (intlist IntList) Len() int {
+	return len(intlist.List)
+}
+
 func TestInt() {
 	x := IntList{[]int{1, 2, 3}}
 	// fmt.Println(x)
@@ -138,6 +142,7 @@ func TestInt() {
 	// check copy list
 	c.Append(-1)
 	fmt.Println(c)
+	fmt.Println(Len(c))
 
 	x.Clear()
 	fmt.Println(x)

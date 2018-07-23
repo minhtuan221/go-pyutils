@@ -20,7 +20,7 @@ func (floatlist *FloatList) Extend(x []float64) {
 func (floatlist *FloatList) Insert(i int, x float64) {
 
 	// Make space in the array for a new element. You can assign it any value.
-	floatlist.List = append(floatlist.List, 0)
+	floatlist.List = append(floatlist.List, 0.0)
 
 	// Copy over elements sourced from index 2, into elements starting at index 3.
 	copy(floatlist.List[i+1:], floatlist.List[i:])
@@ -105,6 +105,18 @@ func (floatlist *FloatList) Copy() FloatList {
 	return res
 }
 
+func (floatlist FloatList) Len() int {
+	return len(floatlist.List)
+}
+
+type iterable interface {
+	Len() int
+}
+
+func Len(list iterable) int {
+	return list.Len()
+}
+
 func TestFloat() {
 	x := FloatList{[]float64{1.2, 2.454, 3.12}}
 	// fmt.Println(x)
@@ -138,6 +150,7 @@ func TestFloat() {
 	// check copy list
 	c.Append(-1)
 	fmt.Println(c)
+	fmt.Println(Len(c))
 
 	x.Clear()
 	fmt.Println(x)

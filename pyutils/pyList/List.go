@@ -4,6 +4,14 @@ import (
 	"fmt"
 )
 
+type iterable interface {
+	Len() int
+}
+
+func Len(list iterable) int {
+	return list.Len()
+}
+
 type List struct {
 	List []interface{}
 }
@@ -64,9 +72,9 @@ func (list *List) Clear() {
 	list.List = nil
 }
 
-func (list *List) Index(x interface{}) []interface{} {
+func (list *List) Index(x interface{}) []int {
 	// find value of x
-	var res []interface{}
+	var res []int
 	for i, value := range list.List {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
@@ -76,7 +84,7 @@ func (list *List) Index(x interface{}) []interface{} {
 	return res
 }
 
-func (list *List) Count(x interface{}) interface{} {
+func (list *List) Count(x interface{}) int {
 	// find value of x
 	res := 0
 	for _, value := range list.List {
@@ -96,7 +104,7 @@ func (list *List) Copy() List {
 	return res
 }
 
-func (list *List) Len() int {
+func (list List) Len() int {
 	return len(list.List)
 }
 
