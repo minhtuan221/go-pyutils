@@ -6,53 +6,53 @@ import (
 )
 
 type FloatList struct {
-	List []float64
+	Values []float64
 }
 
 func (floatlist *FloatList) Append(x float64) {
-	floatlist.List = append(floatlist.List, x)
+	floatlist.Values = append(floatlist.Values, x)
 }
 
 func (floatlist *FloatList) Extend(x []float64) {
-	floatlist.List = append(floatlist.List, x...)
+	floatlist.Values = append(floatlist.Values, x...)
 }
 
 func (floatlist *FloatList) Insert(i int, x float64) {
 
 	// Make space in the array for a new element. You can assign it any value.
-	floatlist.List = append(floatlist.List, 0.0)
+	floatlist.Values = append(floatlist.Values, 0.0)
 
 	// Copy over elements sourced from index 2, into elements starting at index 3.
-	copy(floatlist.List[i+1:], floatlist.List[i:])
+	copy(floatlist.Values[i+1:], floatlist.Values[i:])
 
 	// assign value to index
-	floatlist.List[i] = x
+	floatlist.Values[i] = x
 }
 
 func (floatlist *FloatList) Remove(x float64) {
 	// find value of x
-	for i, value := range floatlist.List {
+	for i, value := range floatlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
-			floatlist.List = append(floatlist.List[:i], floatlist.List[i+1:]...)
+			floatlist.Values = append(floatlist.Values[:i], floatlist.Values[i+1:]...)
 			break
 		}
 	}
 }
 
 func (floatlist *FloatList) Pop(x ...int) float64 {
-	k := len(floatlist.List) - 1
+	k := len(floatlist.Values) - 1
 	if len(x) == 0 {
 		// make a copy of last item
-		res := floatlist.List[k]
+		res := floatlist.Values[k]
 		// remove the last item in list
-		floatlist.List = append(floatlist.List[:k], floatlist.List[k+1:]...)
+		floatlist.Values = append(floatlist.Values[:k], floatlist.Values[k+1:]...)
 		return res
 	} else {
 		i := x[0]
-		res := floatlist.List[i]
+		res := floatlist.Values[i]
 		// remove item in index i
-		floatlist.List = append(floatlist.List[:i], floatlist.List[i+1:]...)
+		floatlist.Values = append(floatlist.Values[:i], floatlist.Values[i+1:]...)
 		return res
 	}
 }
@@ -62,13 +62,13 @@ func (floatlist *FloatList) Popleft() {
 }
 
 func (floatlist *FloatList) Clear() {
-	floatlist.List = nil
+	floatlist.Values = nil
 }
 
 func (floatlist *FloatList) Index(x float64) []int {
 	// find value of x
 	res := []int{}
-	for i, value := range floatlist.List {
+	for i, value := range floatlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res = append(res, i)
@@ -80,7 +80,7 @@ func (floatlist *FloatList) Index(x float64) []int {
 func (floatlist *FloatList) Count(x float64) int {
 	// find value of x
 	res := 0
-	for _, value := range floatlist.List {
+	for _, value := range floatlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res++
@@ -90,28 +90,28 @@ func (floatlist *FloatList) Count(x float64) int {
 }
 
 func (floatlist *FloatList) Sort() {
-	sort.Sort(sort.Float64Slice(floatlist.List))
+	sort.Sort(sort.Float64Slice(floatlist.Values))
 }
 
 func (floatlist *FloatList) Reverse() {
-	sort.Sort(sort.Reverse(sort.Float64Slice(floatlist.List)))
+	sort.Sort(sort.Reverse(sort.Float64Slice(floatlist.Values)))
 }
 
 func (floatlist *FloatList) Copy() FloatList {
 	res := FloatList{}
 	// process a deepcopy
-	res.List = make([]float64, len(floatlist.List))
-	copy(res.List, floatlist.List)
+	res.Values = make([]float64, len(floatlist.Values))
+	copy(res.Values, floatlist.Values)
 	return res
 }
 
 func (floatlist FloatList) Len() int {
-	return len(floatlist.List)
+	return len(floatlist.Values)
 }
 
 func (list FloatList) IfKeyIn(x float64) bool {
 	// find value of x
-	for _, value := range list.List {
+	for _, value := range list.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			return true

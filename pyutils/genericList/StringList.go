@@ -6,53 +6,53 @@ import (
 )
 
 type StringList struct {
-	List []string
+	Values []string
 }
 
 func (stringlist *StringList) Append(x string) {
-	stringlist.List = append(stringlist.List, x)
+	stringlist.Values = append(stringlist.Values, x)
 }
 
 func (stringlist *StringList) Extend(x []string) {
-	stringlist.List = append(stringlist.List, x...)
+	stringlist.Values = append(stringlist.Values, x...)
 }
 
 func (stringlist *StringList) Insert(i int, x string) {
 
 	// Make space in the array for a new element. You can assign it any value.
-	stringlist.List = append(stringlist.List, "")
+	stringlist.Values = append(stringlist.Values, "")
 
 	// Copy over elements sourced from index 2, into elements starting at index 3.
-	copy(stringlist.List[i+1:], stringlist.List[i:])
+	copy(stringlist.Values[i+1:], stringlist.Values[i:])
 
 	// assign value to index
-	stringlist.List[i] = x
+	stringlist.Values[i] = x
 }
 
 func (stringlist *StringList) Remove(x string) {
 	// find value of x
-	for i, value := range stringlist.List {
+	for i, value := range stringlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
-			stringlist.List = append(stringlist.List[:i], stringlist.List[i+1:]...)
+			stringlist.Values = append(stringlist.Values[:i], stringlist.Values[i+1:]...)
 			break
 		}
 	}
 }
 
 func (stringlist *StringList) Pop(x ...int) string {
-	k := len(stringlist.List) - 1
+	k := len(stringlist.Values) - 1
 	if len(x) == 0 {
 		// make a copy of last item
-		res := stringlist.List[k]
+		res := stringlist.Values[k]
 		// remove the last item in list
-		stringlist.List = append(stringlist.List[:k], stringlist.List[k+1:]...)
+		stringlist.Values = append(stringlist.Values[:k], stringlist.Values[k+1:]...)
 		return res
 	} else {
 		i := x[0]
-		res := stringlist.List[i]
+		res := stringlist.Values[i]
 		// remove item in index i
-		stringlist.List = append(stringlist.List[:i], stringlist.List[i+1:]...)
+		stringlist.Values = append(stringlist.Values[:i], stringlist.Values[i+1:]...)
 		return res
 	}
 }
@@ -62,13 +62,13 @@ func (stringlist *StringList) Popleft() {
 }
 
 func (stringlist *StringList) Clear() {
-	stringlist.List = nil
+	stringlist.Values = nil
 }
 
 func (stringlist *StringList) Index(x string) []int {
 	// find value of x
 	res := []int{}
-	for i, value := range stringlist.List {
+	for i, value := range stringlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res = append(res, i)
@@ -80,7 +80,7 @@ func (stringlist *StringList) Index(x string) []int {
 func (stringlist *StringList) Count(x string) int {
 	// find value of x
 	res := 0
-	for _, value := range stringlist.List {
+	for _, value := range stringlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res++
@@ -90,24 +90,24 @@ func (stringlist *StringList) Count(x string) int {
 }
 
 func (stringlist *StringList) Sort() {
-	sort.Sort(sort.StringSlice(stringlist.List))
+	sort.Sort(sort.StringSlice(stringlist.Values))
 }
 
 func (stringlist *StringList) Reverse() {
-	sort.Sort(sort.Reverse(sort.StringSlice(stringlist.List)))
+	sort.Sort(sort.Reverse(sort.StringSlice(stringlist.Values)))
 }
 
 func (stringlist *StringList) Copy() StringList {
 	res := StringList{}
 	// process a deepcopy
-	res.List = make([]string, len(stringlist.List))
-	copy(res.List, stringlist.List)
+	res.Values = make([]string, len(stringlist.Values))
+	copy(res.Values, stringlist.Values)
 	return res
 }
 
 func (list StringList) IfKeyIn(x string) bool {
 	// find value of x
-	for _, value := range list.List {
+	for _, value := range list.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			return true
@@ -117,7 +117,7 @@ func (list StringList) IfKeyIn(x string) bool {
 }
 
 func (stringlist StringList) Len() int {
-	return len(stringlist.List)
+	return len(stringlist.Values)
 }
 
 func TestString() {

@@ -6,53 +6,53 @@ import (
 )
 
 type IntList struct {
-	List []int
+	Values []int
 }
 
 func (intlist *IntList) Append(x int) {
-	intlist.List = append(intlist.List, x)
+	intlist.Values = append(intlist.Values, x)
 }
 
 func (intlist *IntList) Extend(x []int) {
-	intlist.List = append(intlist.List, x...)
+	intlist.Values = append(intlist.Values, x...)
 }
 
 func (intlist *IntList) Insert(i int, x int) {
 
 	// Make space in the array for a new element. You can assign it any value.
-	intlist.List = append(intlist.List, 0)
+	intlist.Values = append(intlist.Values, 0)
 
 	// Copy over elements sourced from index 2, into elements starting at index 3.
-	copy(intlist.List[i+1:], intlist.List[i:])
+	copy(intlist.Values[i+1:], intlist.Values[i:])
 
 	// assign value to index
-	intlist.List[i] = x
+	intlist.Values[i] = x
 }
 
 func (intlist *IntList) Remove(x int) {
 	// find value of x
-	for i, value := range intlist.List {
+	for i, value := range intlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
-			intlist.List = append(intlist.List[:i], intlist.List[i+1:]...)
+			intlist.Values = append(intlist.Values[:i], intlist.Values[i+1:]...)
 			break
 		}
 	}
 }
 
 func (intlist *IntList) Pop(x ...int) int {
-	k := len(intlist.List) - 1
+	k := len(intlist.Values) - 1
 	if len(x) == 0 {
 		// make a copy of last item
-		res := intlist.List[k]
+		res := intlist.Values[k]
 		// remove the last item in list
-		intlist.List = append(intlist.List[:k], intlist.List[k+1:]...)
+		intlist.Values = append(intlist.Values[:k], intlist.Values[k+1:]...)
 		return res
 	} else {
 		i := x[0]
-		res := intlist.List[i]
+		res := intlist.Values[i]
 		// remove item in index i
-		intlist.List = append(intlist.List[:i], intlist.List[i+1:]...)
+		intlist.Values = append(intlist.Values[:i], intlist.Values[i+1:]...)
 		return res
 	}
 }
@@ -62,13 +62,13 @@ func (intlist *IntList) Popleft() {
 }
 
 func (intlist *IntList) Clear() {
-	intlist.List = nil
+	intlist.Values = nil
 }
 
 func (intlist *IntList) Index(x int) []int {
 	// find value of x
 	res := []int{}
-	for i, value := range intlist.List {
+	for i, value := range intlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res = append(res, i)
@@ -80,7 +80,7 @@ func (intlist *IntList) Index(x int) []int {
 func (intlist *IntList) Count(x int) int {
 	// find value of x
 	res := 0
-	for _, value := range intlist.List {
+	for _, value := range intlist.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res++
@@ -90,24 +90,24 @@ func (intlist *IntList) Count(x int) int {
 }
 
 func (intlist *IntList) Sort() {
-	sort.Sort(sort.IntSlice(intlist.List))
+	sort.Sort(sort.IntSlice(intlist.Values))
 }
 
 func (intlist *IntList) Reverse() {
-	sort.Sort(sort.Reverse(sort.IntSlice(intlist.List)))
+	sort.Sort(sort.Reverse(sort.IntSlice(intlist.Values)))
 }
 
 func (intlist *IntList) Copy() IntList {
 	res := IntList{}
 	// process a deepcopy
-	res.List = make([]int, len(intlist.List))
-	copy(res.List, intlist.List)
+	res.Values = make([]int, len(intlist.Values))
+	copy(res.Values, intlist.Values)
 	return res
 }
 
 func (list IntList) IfKeyIn(x int) bool {
 	// find value of x
-	for _, value := range list.List {
+	for _, value := range list.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			return true
@@ -117,7 +117,7 @@ func (list IntList) IfKeyIn(x int) bool {
 }
 
 func (intlist IntList) Len() int {
-	return len(intlist.List)
+	return len(intlist.Values)
 }
 
 func TestInt() {
