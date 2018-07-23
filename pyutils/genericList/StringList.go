@@ -105,6 +105,17 @@ func (stringlist *StringList) Copy() StringList {
 	return res
 }
 
+func (list StringList) IfKeyIn(x string) bool {
+	// find value of x
+	for _, value := range list.List {
+		if value == x {
+			// Where a is the slice, and i is the index of the element you want to delete:
+			return true
+		}
+	}
+	return false
+}
+
 func (stringlist StringList) Len() int {
 	return len(stringlist.List)
 }

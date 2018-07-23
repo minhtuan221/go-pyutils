@@ -109,6 +109,17 @@ func (floatlist FloatList) Len() int {
 	return len(floatlist.List)
 }
 
+func (list FloatList) IfKeyIn(x float64) bool {
+	// find value of x
+	for _, value := range list.List {
+		if value == x {
+			// Where a is the slice, and i is the index of the element you want to delete:
+			return true
+		}
+	}
+	return false
+}
+
 type iterable interface {
 	Len() int
 }
