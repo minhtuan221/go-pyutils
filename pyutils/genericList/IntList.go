@@ -1,4 +1,4 @@
-package genericList
+package genericlist
 
 import (
 	"fmt"
