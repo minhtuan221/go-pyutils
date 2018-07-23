@@ -3,6 +3,7 @@ package main
 import (
 	pylist "Pyutils/pyutils/Pylist"
 	genericlist "Pyutils/pyutils/genericList"
+	"Pyutils/pyutils/try_except"
 	"fmt"
 )
 
@@ -25,5 +26,7 @@ func main() {
 	genericlist.TestString()
 	fmt.Println("Start of test Dict: ")
 	pylist.TestDict()
+	fmt.Println("Start of test TryCatch: ")
+	tryexcept.TestTryCatch()
 	// blockchain.PrettyPrint(balance)
 }

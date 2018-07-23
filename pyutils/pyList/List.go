@@ -18,53 +18,53 @@ func IfKeyIn(key interface{}, list iterable) bool {
 }
 
 type List struct {
-	List []interface{}
+	Values []interface{}
 }
 
 func (list *List) Append(x interface{}) {
-	list.List = append(list.List, x)
+	list.Values = append(list.Values, x)
 }
 
 func (list *List) Extend(x []interface{}) {
-	list.List = append(list.List, x...)
+	list.Values = append(list.Values, x...)
 }
 
 func (list *List) Insert(i int, x interface{}) {
 
 	// Make space in the array for a new element. You can assign it any value.
-	list.List = append(list.List, 0)
+	list.Values = append(list.Values, 0)
 
 	// Copy over elements sourced from index 2, into elements starting at index 3.
-	copy(list.List[i+1:], list.List[i:])
+	copy(list.Values[i+1:], list.Values[i:])
 
 	// assign value to index
-	list.List[i] = x
+	list.Values[i] = x
 }
 
 func (list *List) Remove(x interface{}) {
 	// find value of x
-	for i, value := range list.List {
+	for i, value := range list.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
-			list.List = append(list.List[:i], list.List[i+1:]...)
+			list.Values = append(list.Values[:i], list.Values[i+1:]...)
 			break
 		}
 	}
 }
 
 func (list *List) Pop(x ...int) interface{} {
-	k := len(list.List) - 1
+	k := len(list.Values) - 1
 	if len(x) == 0 {
 		// make a copy of last item
-		res := list.List[k]
+		res := list.Values[k]
 		// remove the last item in list
-		list.List = append(list.List[:k], list.List[k+1:]...)
+		list.Values = append(list.Values[:k], list.Values[k+1:]...)
 		return res
 	}
 	i := x[0]
-	res := list.List[i]
+	res := list.Values[i]
 	// remove item in index i
-	list.List = append(list.List[:i], list.List[i+1:]...)
+	list.Values = append(list.Values[:i], list.Values[i+1:]...)
 	return res
 }
 
@@ -73,13 +73,13 @@ func (list *List) Popleft() {
 }
 
 func (list *List) Clear() {
-	list.List = nil
+	list.Values = nil
 }
 
 func (list *List) Index(x interface{}) []int {
 	// find value of x
 	var res []int
-	for i, value := range list.List {
+	for i, value := range list.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res = append(res, i)
@@ -90,7 +90,7 @@ func (list *List) Index(x interface{}) []int {
 
 func (list List) IfKeyIn(x interface{}) bool {
 	// find value of x
-	for _, value := range list.List {
+	for _, value := range list.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			return true
@@ -102,7 +102,7 @@ func (list List) IfKeyIn(x interface{}) bool {
 func (list *List) Count(x interface{}) int {
 	// find value of x
 	res := 0
-	for _, value := range list.List {
+	for _, value := range list.Values {
 		if value == x {
 			// Where a is the slice, and i is the index of the element you want to delete:
 			res++
@@ -114,13 +114,13 @@ func (list *List) Count(x interface{}) int {
 func (list *List) Copy() List {
 	res := List{}
 	// process a deepcopy
-	res.List = make([]interface{}, len(list.List))
-	copy(res.List, list.List)
+	res.Values = make([]interface{}, len(list.Values))
+	copy(res.Values, list.Values)
 	return res
 }
 
 func (list List) Len() int {
-	return len(list.List)
+	return len(list.Values)
 }
 
 type test struct {
