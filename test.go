@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Your test is here: ")
+	defer fmt.Println("Your test is here: ")
 	var x pylist.List
 	// = PyList.List{}
 	// fmt.Println(x)
@@ -28,5 +28,6 @@ func main() {
 	pylist.TestDict()
 	fmt.Println("Start of test TryCatch: ")
 	tryexcept.TestTryCatch()
+	// decorator
 	// blockchain.PrettyPrint(balance)
 }
