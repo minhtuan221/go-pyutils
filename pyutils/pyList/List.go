@@ -6,7 +6,7 @@ import (
 
 type iterable interface {
 	Len() int
-	IfKeyIn(key interface{}) bool
+	Contain(key interface{}) bool
 }
 
 func Len(list iterable) int {
@@ -14,7 +14,7 @@ func Len(list iterable) int {
 }
 
 func IfKeyIn(key interface{}, list iterable) bool {
-	return list.IfKeyIn(key)
+	return list.Contain(key)
 }
 
 type List struct {
@@ -88,7 +88,7 @@ func (list *List) Index(x interface{}) []int {
 	return res
 }
 
-func (list List) IfKeyIn(x interface{}) bool {
+func (list List) Contain(x interface{}) bool {
 	// find value of x
 	for _, value := range list.Values {
 		if value == x {

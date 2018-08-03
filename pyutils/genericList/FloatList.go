@@ -109,7 +109,7 @@ func (floatlist FloatList) Len() int {
 	return len(floatlist.Values)
 }
 
-func (list FloatList) IfKeyIn(x float64) bool {
+func (list FloatList) Contain(x float64) bool {
 	// find value of x
 	for _, value := range list.Values {
 		if value == x {

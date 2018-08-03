@@ -105,7 +105,7 @@ func (intlist *IntList) Copy() IntList {
 	return res
 }
 
-func (list IntList) IfKeyIn(x int) bool {
+func (list IntList) Contain(x int) bool {
 	// find value of x
 	for _, value := range list.Values {
 		if value == x {

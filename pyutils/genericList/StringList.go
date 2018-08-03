@@ -105,7 +105,7 @@ func (stringlist *StringList) Copy() StringList {
 	return res
 }
 
-func (list StringList) IfKeyIn(x string) bool {
+func (list StringList) Contain(x string) bool {
 	// find value of x
 	for _, value := range list.Values {
 		if value == x {

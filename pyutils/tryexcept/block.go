@@ -6,7 +6,7 @@ import (
 
 type Block struct {
 	Try     func()
-	Catch   func(Exception)
+	Except  func(Exception)
 	Finally func()
 }
 
@@ -22,10 +22,10 @@ func (tcf Block) Do() bool {
 
 		defer tcf.Finally()
 	}
-	if tcf.Catch != nil {
+	if tcf.Except != nil {
 		defer func() {
 			if r := recover(); r != nil {
-				tcf.Catch(r)
+				tcf.Except(r)
 				is_ok = false
 			}
 		}()
@@ -34,14 +34,14 @@ func (tcf Block) Do() bool {
 	return is_ok
 }
 
-func TestTryCatch() {
+func TestTryExcept() {
 	fmt.Println("We started")
 	x := Block{
 		Try: func() {
 			fmt.Println("I tried")
 			Throw("Oh,...sh...")
 		},
-		Catch: func(e Exception) {
+		Except: func(e Exception) {
 			fmt.Printf("Caught %v\n", e)
 		},
 		Finally: func() {
