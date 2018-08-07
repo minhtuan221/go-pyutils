@@ -21,14 +21,17 @@ type List struct {
 	Values []interface{}
 }
 
+// Append one item to list
 func (list *List) Append(x interface{}) {
 	list.Values = append(list.Values, x)
 }
 
+// Extend list by another list
 func (list *List) Extend(x []interface{}) {
 	list.Values = append(list.Values, x...)
 }
 
+// Insert an item in to a list with specified index position
 func (list *List) Insert(i int, x interface{}) {
 
 	// Make space in the array for a new element. You can assign it any value.
@@ -41,6 +44,7 @@ func (list *List) Insert(i int, x interface{}) {
 	list.Values[i] = x
 }
 
+// Remove an specified item in list
 func (list *List) Remove(x interface{}) {
 	// find value of x
 	for i, value := range list.Values {
@@ -52,6 +56,7 @@ func (list *List) Remove(x interface{}) {
 	}
 }
 
+// Pop an item in list with specified index
 func (list *List) Pop(x ...int) interface{} {
 	k := len(list.Values) - 1
 	if len(x) == 0 {
@@ -68,6 +73,7 @@ func (list *List) Pop(x ...int) interface{} {
 	return res
 }
 
+// Popleft the first item add to list
 func (list *List) Popleft() {
 	list.Pop(0)
 }
@@ -76,6 +82,7 @@ func (list *List) Clear() {
 	list.Values = nil
 }
 
+// Index = Delete the item with the specified item
 func (list *List) Index(x interface{}) []int {
 	// find value of x
 	var res []int
@@ -88,6 +95,7 @@ func (list *List) Index(x interface{}) []int {
 	return res
 }
 
+// Contain find item by item
 func (list List) Contain(x interface{}) bool {
 	// find value of x
 	for _, value := range list.Values {
@@ -99,6 +107,7 @@ func (list List) Contain(x interface{}) bool {
 	return false
 }
 
+// Count how many item in a list
 func (list *List) Count(x interface{}) int {
 	// find value of x
 	res := 0
@@ -117,6 +126,18 @@ func (list *List) Copy() List {
 	res.Values = make([]interface{}, len(list.Values))
 	copy(res.Values, list.Values)
 	return res
+}
+
+// FindOneBy => find the first item in a list and return its index. return -1 if not found
+func (list *List) FindOneBy(oneItem interface{}, f func(one interface{}, item interface{}) bool) int {
+	// find value of x
+	for i, value := range list.Values {
+		if f(oneItem, value) == true {
+			// Where a is the slice, and i is the index of the element you want to delete:
+			return i
+		}
+	}
+	return -1
 }
 
 func (list List) Len() int {

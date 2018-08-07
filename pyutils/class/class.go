@@ -24,8 +24,17 @@ func (m *MyClass) Amethod(s string) {
 	m.Name = s
 }
 
+type OtherClass struct {
+	Name string
+}
+
+func (m *OtherClass) Amethod(s string) {
+	m.Name = s
+}
+
 type Inheritance struct {
-	MyClass
+	*MyClass
+	OtherClass
 	Other string
 }
 
@@ -39,11 +48,11 @@ func test() {
 	x := MyClass{"Old Name"}
 	x.Amethod("Name change by method")
 	log.Println(x)
-	y := Inheritance{}
-	y.Name = "New Name"
+	y := Inheritance{&x, OtherClass{"Other Name"}, ""}
+	// y.Name = "New Name"
 	y.Other = "Other attribute"
 	log.Println(y)
-	y.Amethod("Method inheritance")
+	// y.Amethod("Method inheritance")
 	log.Println(y)
 }
 
