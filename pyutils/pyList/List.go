@@ -1,6 +1,8 @@
 package pylist
 
 import (
+	"Pyutils/pyutils/tryexcept"
+	"encoding/json"
 	"fmt"
 )
 
@@ -138,6 +140,14 @@ func (list *List) FindOneBy(oneItem interface{}, f func(one interface{}, item in
 		}
 	}
 	return -1
+}
+func (list *List) ToJson() string {
+	data, err := json.Marshal(list.Values)
+	if err != nil {
+		tryexcept.Throw("Error when converting to json")
+		return "{}"
+	}
+	return string(data)
 }
 
 func (list List) Len() int {

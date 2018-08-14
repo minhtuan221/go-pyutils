@@ -55,8 +55,9 @@ func (b *Block) Catch(exc func(Exception)) *Block {
 // Add a finally block. These will be run whether or not an exception was
 // thrown. However, if a regular panic occurs this function will not be run and
 // the panic will behave as normal.
-func (b *Block) Final(finally func()) {
+func (b *Block) Final(finally func()) *Block {
 	b.Finally = finally
+	return b
 }
 
 type Exception interface{}
@@ -83,12 +84,21 @@ func (blockcode Block) Do() (Block, interface{}) {
 	return blockcode, is_ok
 }
 
+// func Keyword(kw []interface{}, vtype struct(), index int) {
+// 	converted := vtype{}
+// }
+//  Keyword(struct{ name string, age int})
+
 func main() {
 	fmt.Println("Test call back")
 	Callback("Hello").Then(func(s ...interface{}) []interface{} {
 		fmt.Println(s)
 		fmt.Println("Hi")
 		return s
+	}).Catch(func(e Exception) {
+		fmt.Println("Got error: =>", e)
+	}).Final(func() {
+		fmt.Println("This is finally")
 	}).Then(func(s ...interface{}) []interface{} {
 		fmt.Println(s)
 		fmt.Println("\n Nice to meet you")
@@ -97,9 +107,5 @@ func main() {
 		fmt.Println("Nice to meet you too")
 		Throw("Error Occur.... !!")
 		return s
-	}).Catch(func(e Exception) {
-		fmt.Println("Got error: =>", e)
-	}).Final(func() {
-		fmt.Println("This is finally")
 	})
 }

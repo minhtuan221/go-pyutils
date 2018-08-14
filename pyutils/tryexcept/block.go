@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-type Block struct {
+type Try struct {
 	Try     func()
 	Except  func(Exception)
 	Finally func()
@@ -16,7 +16,7 @@ func Throw(up Exception) {
 	panic(up)
 }
 
-func (tcf Block) Do() bool {
+func (tcf Try) Do() bool {
 	is_ok := true
 	if tcf.Finally != nil {
 
@@ -34,12 +34,12 @@ func (tcf Block) Do() bool {
 	return is_ok
 }
 
-func TestTryExcept() {
+func main() {
 	fmt.Println("We started")
-	x := Block{
+	x := Try{
 		Try: func() {
 			fmt.Println("I tried")
-			Throw("Oh,...sh...")
+			// float64("abc")
 		},
 		Except: func(e Exception) {
 			fmt.Printf("Caught %v\n", e)
