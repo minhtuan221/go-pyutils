@@ -2,6 +2,8 @@ package tryexcept
 
 import (
 	"fmt"
+
+	"github.com/pkg/errors"
 )
 
 type Try struct {
@@ -34,6 +36,14 @@ func (tcf Try) Do() bool {
 	return is_ok
 }
 
+func Traceback(e Exception) error {
+	err, exp := e.(error)
+	if !exp {
+		panic("Uncatchable Error: Error while converting interface into error object in traceback function")
+	}
+	traceback := errors.WithStack(err)
+	return traceback
+}
 func main() {
 	fmt.Println("We started")
 	x := Try{

@@ -3,7 +3,6 @@ package pylist
 import (
 	"Pyutils/pyutils/tryexcept"
 	"encoding/json"
-	"fmt"
 )
 
 type iterable interface {
@@ -17,6 +16,10 @@ func Len(list iterable) int {
 
 func IfKeyIn(key interface{}, list iterable) bool {
 	return list.Contain(key)
+}
+
+func NewList(x ...interface{}) *List {
+	return &List{x}
 }
 
 type List struct {
@@ -35,6 +38,11 @@ func (list *List) Extend(x []interface{}) {
 
 // Insert an item in to a list with specified index position
 func (list *List) Insert(i int, x interface{}) {
+	if i > list.Len() {
+		panic("Insert to out of range position in list")
+	} else if i < 0 {
+		i = list.Len() + i
+	}
 
 	// Make space in the array for a new element. You can assign it any value.
 	list.Values = append(list.Values, 0)
@@ -156,55 +164,4 @@ func (list List) Len() int {
 
 type test struct {
 	value int
-}
-
-func TestList() {
-	// var dataSlice []int = foo()
-	interfaceSlice := make([]interface{}, 3)
-	for i, d := range []int{1, 2, 3} {
-		interfaceSlice[i] = d
-	}
-	x := List{}
-	// fmt.Println(x)
-	for _, value := range []int{5, 6, 7, 8, 9} {
-		x.Append(test{value})
-	}
-	fmt.Println(x)
-	for i, d := range []int{10, 11, 13} {
-		interfaceSlice[i] = d
-	}
-	x.Extend(interfaceSlice)
-	fmt.Println(x)
-	x.Insert(3, 9)
-	fmt.Println(x)
-
-	x.Remove(11)
-	fmt.Println(x)
-
-	c := x.Copy()
-
-	y := x.Pop()
-	fmt.Println(y)
-	z := x.Pop(2)
-	fmt.Println(z)
-
-	fmt.Println(x.Index(9))
-	fmt.Println(x.Count(9))
-
-	fmt.Println(x.Count(test{9}))
-	fmt.Println(x.Len())
-	fmt.Println("If key 9 in:", IfKeyIn(9, x))
-
-	// x.Sort()
-	// fmt.Println(x)
-	// x.Reverse()
-	// fmt.Println(x)
-
-	// check copy list
-	c.Append(-1)
-	fmt.Println(c)
-
-	x.Clear()
-	fmt.Println(x)
-
 }

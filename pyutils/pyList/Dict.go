@@ -6,6 +6,10 @@ import (
 	"fmt"
 )
 
+func NewDict() *Dict {
+	return &Dict{make(map[string]interface{})}
+}
+
 type Dict struct {
 	Values map[string]interface{}
 }
@@ -81,7 +85,7 @@ type test2 struct {
 
 func TestDict() {
 	// var dataSlice []int = foo()
-	mydict := Dict{make(map[string]interface{})}
+	mydict := NewDict() //Dict{make(map[string]interface{})}
 	mydict.Set("s1", 12)
 	mydict.Set("s2", "My Name")
 	fmt.Println(mydict.ToJson())
