@@ -43,7 +43,7 @@ func NewRotateWriter(filename string, timeFormat string) *RotateWriter {
 
 // Write satisfies the io.Writer interface.
 func (w *RotateWriter) Write(output []byte) (int, error) {
-	w.lock.Lock()
+	w.lock.Lock() // => lieu co can dung Mutex lock o day ko
 	defer w.lock.Unlock()
 	return w.fp.Write(append([]byte(time.Now().Format(w.timeFormat)), output...))
 }

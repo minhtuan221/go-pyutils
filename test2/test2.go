@@ -25,9 +25,12 @@ func main() {
 	logger.Info("this is second logger in new file")
 	logger.Writer.Rotate("2018-08-31")
 	logger.Info("this is third logger in new file")
-	for index := 0; index < 100; index++ {
-		time.Sleep(10 * time.Second)
-		logger.Info(index, "This is automatic logging every 10 second for testing")
+	for index := 0; index < 10000; index++ {
+		time.Sleep(1 * time.Second)
+		go func() {
+			logger.Info(index, "This is automatic logging every 10 second for testing")
+		}()
+
 	}
 	fmt.Println("Waiting for all threads to finish")
 

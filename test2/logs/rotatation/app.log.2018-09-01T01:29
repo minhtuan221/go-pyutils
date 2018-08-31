@@ -1,6 +1,0 @@
-2018-09-01 01:28:03.773953 logger.go:150: [INFO] this is third logger in new file
-2018-09-01 01:28:13.776245 logger.go:150: [INFO] 0 This is automatic logging every 10 second for testing
-2018-09-01 01:28:23.776502 logger.go:150: [INFO] 1 This is automatic logging every 10 second for testing
-2018-09-01 01:28:33.780645 logger.go:150: [INFO] 2 This is automatic logging every 10 second for testing
-2018-09-01 01:28:43.782121 logger.go:150: [INFO] 3 This is automatic logging every 10 second for testing
-2018-09-01 01:28:53.785188 logger.go:150: [INFO] 4 This is automatic logging every 10 second for testing
