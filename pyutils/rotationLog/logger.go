@@ -1,6 +1,7 @@
 package pylist
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -146,23 +147,31 @@ type Logger struct {
 
 func (logger *Logger) Info(output ...interface{}) {
 	logger.Writer.doRollover()
-	logger.Printf("[INFO] %+v\n", output)
+	logger.Print("[INFO] ", fmt.Sprintln(output...))
 }
 
 func (logger *Logger) Warning(output ...interface{}) {
-	logger.Printf("[WARNING] %+v\n", output)
+	logger.Writer.doRollover()
+	logger.Print("[WARNING] ", fmt.Sprintln(output...))
+	// logger.Printf("[WARNING] %+v\n", output...)
 }
 
 func (logger *Logger) Debug(output ...interface{}) {
-	logger.Printf("[DEBUG] %+v\n", output)
+	logger.Writer.doRollover()
+	logger.Print("[DEBUG] ", fmt.Sprintln(output...))
+	// logger.Printf("[DEBUG] %+v\n", output...)
 }
 
 func (logger *Logger) Error(output ...interface{}) {
-	logger.Printf("[ERROR] %+v\n", output)
+	logger.Writer.doRollover()
+	logger.Print("[ERROR] ", fmt.Sprintln(output...))
+	// logger.Printf("[ERROR] %+v\n", output...)
 }
 
 func (logger *Logger) Fatal(output ...interface{}) {
-	logger.Printf("[FATAL] %+v\n", output)
+	logger.Writer.doRollover()
+	logger.Print("[FATAL] ", fmt.Sprintln(output...))
+	// logger.Printf("[FATAL] %+v\n", output...)
 }
 
 // Create a logger from a original file

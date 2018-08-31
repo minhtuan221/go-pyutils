@@ -10,7 +10,14 @@ import (
 var wg sync.WaitGroup
 
 func main() {
-	py.CreateDirIfNotExist("logs/rotatation")
+	// dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println(dir)
+	// url := path.Join(dir, "../logs/rotatation")
+	// fmt.Println(url)
+	py.CreateDirIfNotExist("./logs/rotatation")
 	logger := py.CreateLogger("logs/rotatation/app.log")
 	logger.Writer.TimedRotatingFileHandler("m", 1)
 	logger.Info("this is logger")
