@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// CreateDirIfNotExist use for creating dir if not exist for rotation log
 func CreateDirIfNotExist(dir string) {
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		err = os.MkdirAll(dir, 0755)
@@ -19,10 +20,13 @@ func CreateDirIfNotExist(dir string) {
 
 // RotateWriter struct log rotate writer. can be use as io.Writer interface
 type RotateWriter struct {
-	lock       sync.Mutex
-	filename   string // should be set to the actual filename
-	fp         *os.File
-	timeFormat string
+	lock           sync.Mutex
+	filename       string // should be set to the actual filename
+	fp             *os.File
+	timeFormat     string
+	when           string
+	interval       uint
+	lastRotateTime time.Time
 }
 
 // NewRotateWriter Make a new RotateWriter. Return nil if error occurs during setup.
@@ -75,7 +79,56 @@ func (w *RotateWriter) Rotate(suffix ...string) (err error) {
 	return err
 }
 
-// Writer can be use as io.Writer interface
+// TimedRotatingFileHandler => this is the api of python in rotating log
+// TimedRotatingFileHandler(filename [,when [,interval [,backupCount]]])
+func (w *RotateWriter) TimedRotatingFileHandler(when string, interval uint) {
+	w.when = when
+	w.interval = interval
+	w.lastRotateTime = time.Now()
+}
+
+func (w *RotateWriter) doRollover() {
+	if w.interval == 0 {
+		w.interval = 1
+	}
+	if w.when == "Day" || w.when == "D" || w.when == "d" {
+		// get the string of current time
+		currentTime := time.Now().Format(time.RFC3339)[:10]
+		// get time from writer
+		lasttime := w.lastRotateTime.Format(time.RFC3339)[:10]
+		// check the difference to make Rotate or not
+		if currentTime != lasttime {
+			w.Rotate(currentTime)
+			w.lastRotateTime = time.Now()
+		}
+	}
+
+	if w.when == "Hour" || w.when == "H" || w.when == "h" {
+		// get the string of current time
+		currentTime := time.Now().Format(time.RFC3339)[:13]
+		// get time from writer
+		lasttime := w.lastRotateTime.Format(time.RFC3339)[:13]
+		// check the difference to make Rotate or not
+		if currentTime != lasttime {
+			w.Rotate(currentTime)
+			w.lastRotateTime = time.Now()
+		}
+	}
+
+	if w.when == "Minute" || w.when == "M" || w.when == "m" {
+		// get the string of current time
+		currentTime := time.Now().Format(time.RFC3339)[:16]
+		// get time from writer
+		lasttime := w.lastRotateTime.Format(time.RFC3339)[:16]
+		// check the difference to make Rotate or not
+		if currentTime != lasttime {
+			w.Rotate(currentTime)
+			w.lastRotateTime = time.Now()
+		}
+	}
+}
+
+// Writer can be use as io.Writer interface. Use as an example
 type Writer struct {
 	io.Writer
 	timeFormat string
@@ -85,13 +138,14 @@ func (w *Writer) Write(b []byte) (n int, err error) {
 	return w.Writer.Write(append([]byte(time.Now().Format(w.timeFormat)), b...))
 }
 
-// Logger object wrap log.Logger object
+// Logger object wrap log.Logger object and RotateWriter
 type Logger struct {
 	*log.Logger
 	Writer *RotateWriter
 }
 
 func (logger *Logger) Info(output ...interface{}) {
+	logger.Writer.doRollover()
 	logger.Printf("[INFO] %+v\n", output)
 }
 

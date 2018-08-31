@@ -1,0 +1,6 @@
+2018-08-31 17:07:01.827610 logger.go:149: [INFO] [3 This is automatic logging every 10 second for testing]
+2018-08-31 17:07:11.830324 logger.go:149: [INFO] [4 This is automatic logging every 10 second for testing]
+2018-08-31 17:07:21.835591 logger.go:149: [INFO] [5 This is automatic logging every 10 second for testing]
+2018-08-31 17:07:31.836515 logger.go:149: [INFO] [6 This is automatic logging every 10 second for testing]
+2018-08-31 17:07:41.836749 logger.go:149: [INFO] [7 This is automatic logging every 10 second for testing]
+2018-08-31 17:07:51.840805 logger.go:149: [INFO] [8 This is automatic logging every 10 second for testing]

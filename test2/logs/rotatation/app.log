@@ -1,1 +1,4 @@
-2018-08-31 15:22:52.951091 logger.go:95: [INFO] [this is third logger in new file]
+2018-08-31 17:11:01.899296 logger.go:149: [INFO] [27 This is automatic logging every 10 second for testing]
+2018-08-31 17:11:11.899508 logger.go:149: [INFO] [28 This is automatic logging every 10 second for testing]
+2018-08-31 17:11:21.902121 logger.go:149: [INFO] [29 This is automatic logging every 10 second for testing]
+2018-08-31 17:11:31.903393 logger.go:149: [INFO] [30 This is automatic logging every 10 second for testing]
