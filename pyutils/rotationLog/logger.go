@@ -145,6 +145,10 @@ type Logger struct {
 	Writer *RotateWriter
 }
 
+func (logger *Logger) TimedRotating(when string) {
+	logger.Writer.TimedRotatingFileHandler(when, 1)
+}
+
 func (logger *Logger) Info(output ...interface{}) {
 	logger.Writer.doRollover()
 	logger.Print("[INFO] ", fmt.Sprintln(output...))

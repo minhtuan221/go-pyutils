@@ -19,7 +19,7 @@ func main() {
 	// fmt.Println(url)
 	py.CreateDirIfNotExist("./logs/rotatation")
 	logger := py.CreateLogger("logs/rotatation/app.log")
-	logger.Writer.TimedRotatingFileHandler("m", 1)
+	logger.TimedRotating("m")
 	logger.Info("this is logger")
 	logger.Writer.Rotate()
 	logger.Info("this is second logger in new file")
@@ -30,7 +30,6 @@ func main() {
 		go func() {
 			logger.Info(index, "This is automatic logging every 10 second for testing")
 		}()
-
 	}
 	fmt.Println("Waiting for all threads to finish")
 

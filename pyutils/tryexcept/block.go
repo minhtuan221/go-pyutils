@@ -44,6 +44,24 @@ func Traceback(e Exception) error {
 	traceback := errors.WithStack(err)
 	return traceback
 }
+
+type Keywords struct {
+	Values []interface{}
+}
+
+func (kw *Keywords) Get(i uint, defaultValue interface{}) interface{} {
+	x := int(i)
+	if x < len(kw.Values) {
+		return kw.Values[x]
+	}
+	return defaultValue
+}
+
+// OptionArgs function create keyword arguments
+func OptionArgs(Val ...interface{}) *Keywords {
+	return &Keywords{Val}
+}
+
 func main() {
 	fmt.Println("We started")
 	x := Try{
@@ -60,4 +78,7 @@ func main() {
 	}.Do()
 	fmt.Println("Response", x)
 	fmt.Println("We went on")
+	// var testUint uint
+	// testUint = 0
+	// fmt.Println(testUint)
 }
