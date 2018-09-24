@@ -145,40 +145,46 @@ type Logger struct {
 	Writer *RotateWriter
 }
 
+// TimedRotating choose "D" for everyday rotating log, "H" for hours and "M" for minutes rotating log,
 func (logger *Logger) TimedRotating(when string) {
 	logger.Writer.TimedRotatingFileHandler(when, 1)
 }
 
+// Info => write to file an info log as [INFO] ...
 func (logger *Logger) Info(output ...interface{}) {
 	logger.Writer.doRollover()
 	logger.Print("[INFO] ", fmt.Sprintln(output...))
 }
 
+// Warning => write to file log as [Warning] ...
 func (logger *Logger) Warning(output ...interface{}) {
 	logger.Writer.doRollover()
 	logger.Print("[WARNING] ", fmt.Sprintln(output...))
 	// logger.Printf("[WARNING] %+v\n", output...)
 }
 
+// Debug => write to file log as [Debug] ...
 func (logger *Logger) Debug(output ...interface{}) {
 	logger.Writer.doRollover()
 	logger.Print("[DEBUG] ", fmt.Sprintln(output...))
 	// logger.Printf("[DEBUG] %+v\n", output...)
 }
 
+// Error => write to file log as [Error] ...
 func (logger *Logger) Error(output ...interface{}) {
 	logger.Writer.doRollover()
 	logger.Print("[ERROR] ", fmt.Sprintln(output...))
 	// logger.Printf("[ERROR] %+v\n", output...)
 }
 
+// Fatal => write to file log as [Fatal] ...
 func (logger *Logger) Fatal(output ...interface{}) {
 	logger.Writer.doRollover()
 	logger.Print("[FATAL] ", fmt.Sprintln(output...))
 	// logger.Printf("[FATAL] %+v\n", output...)
 }
 
-// Create a logger from a original file
+// CreateLogger => Create a logger from a original file. This method will return logger object and accepted input as file name
 func CreateLogger(filename string) Logger {
 	// logFile, err := os.Create("app.log")
 	// if err != nil {
