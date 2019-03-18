@@ -1,10 +1,11 @@
 package main
 
 import (
-	. "Pyutils/pyutils/Pylist"
-	genericlist "Pyutils/pyutils/genericList"
-	"Pyutils/pyutils/tryexcept"
 	"fmt"
+
+	. "github.com/minhtuan221/go-pyutils/pyutils/Pylist"
+	genericlist "github.com/minhtuan221/go-pyutils/pyutils/genericList"
+	"github.com/minhtuan221/go-pyutils/pyutils/tryexcept"
 
 	ini "gopkg.in/ini.v1"
 )

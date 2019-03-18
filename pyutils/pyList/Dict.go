@@ -1,9 +1,10 @@
 package pylist
 
 import (
-	"Pyutils/pyutils/try_except"
 	"encoding/json"
 	"fmt"
+
+	"github.com/minhtuan221/go-pyutils/pyutils/tryexcept"
 )
 
 func NewDict() *Dict {

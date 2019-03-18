@@ -1,8 +1,9 @@
 package pylist
 
 import (
-	"Pyutils/pyutils/tryexcept"
 	"encoding/json"
+
+	"github.com/minhtuan221/go-pyutils/pyutils/tryexcept"
 )
 
 type iterable interface {

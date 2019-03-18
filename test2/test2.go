@@ -1,10 +1,11 @@
 package main
 
 import (
-	py "Pyutils/pyutils/rotationLog"
 	"fmt"
 	"sync"
 	"time"
+
+	py "github.com/minhtuan221/go-pyutils/pyutils/rotationLog"
 )
 
 var wg sync.WaitGroup
