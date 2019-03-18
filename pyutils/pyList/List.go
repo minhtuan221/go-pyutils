@@ -11,18 +11,22 @@ type iterable interface {
 	Contain(key interface{}) bool
 }
 
+// Len = simillar to Len but from python
 func Len(list iterable) int {
 	return list.Len()
 }
 
+// IfKeyIn = simillar to contain but from python
 func IfKeyIn(key interface{}, list iterable) bool {
 	return list.Contain(key)
 }
 
+// NewList =  return a new List
 func NewList(x ...interface{}) *List {
 	return &List{x}
 }
 
+// List = Data structure resemble list from python
 type List struct {
 	Values []interface{}
 }
@@ -89,6 +93,7 @@ func (list *List) Popleft() {
 	list.Pop(0)
 }
 
+// Clear = assign nil to list.Value
 func (list *List) Clear() {
 	list.Values = nil
 }
@@ -106,7 +111,7 @@ func (list *List) Index(x interface{}) []int {
 	return res
 }
 
-// Contain find item by item
+// Contain find item by item. This method only check basic value type => will not work with pointer
 func (list List) Contain(x interface{}) bool {
 	// find value of x
 	for _, value := range list.Values {
@@ -118,7 +123,7 @@ func (list List) Contain(x interface{}) bool {
 	return false
 }
 
-// Count how many item in a list
+// Count how many item in a list. This method only check basic value type => will not work with pointer
 func (list *List) Count(x interface{}) int {
 	// find value of x
 	res := 0
@@ -131,6 +136,7 @@ func (list *List) Count(x interface{}) int {
 	return res
 }
 
+// Copy =  return a copy with different pointer
 func (list *List) Copy() List {
 	res := List{}
 	// process a deepcopy
@@ -150,7 +156,9 @@ func (list *List) FindOneBy(oneItem interface{}, f func(one interface{}, item in
 	}
 	return -1
 }
-func (list *List) ToJson() string {
+
+// ToJSON = try to convert all to string Json
+func (list *List) ToJSON() string {
 	data, err := json.Marshal(list.Values)
 	if err != nil {
 		tryexcept.Throw("Error when converting to json")
@@ -159,6 +167,7 @@ func (list *List) ToJson() string {
 	return string(data)
 }
 
+// Len = return the lenght of Value
 func (list List) Len() int {
 	return len(list.Values)
 }
