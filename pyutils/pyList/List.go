@@ -2,6 +2,7 @@ package pylist
 
 import (
 	"encoding/json"
+	"reflect"
 
 	"github.com/minhtuan221/go-pyutils/pyutils/tryexcept"
 )
@@ -116,11 +117,21 @@ func (list List) Contain(x interface{}) bool {
 	// find value of x
 	for _, value := range list.Values {
 		if value == x {
-			// Where a is the slice, and i is the index of the element you want to delete:
 			return true
 		}
 	}
 	return false
+}
+
+// ContainDeep find item by item using DeepEqual. This method will return the index of the first value if exist, otherwise, it will return -1
+func (list List) ContainDeep(x interface{}) int {
+	// find value of x
+	for index, value := range list.Values {
+		if reflect.DeepEqual(value, x) {
+			return index
+		}
+	}
+	return -1
 }
 
 // Count how many item in a list. This method only check basic value type => will not work with pointer
@@ -129,7 +140,6 @@ func (list *List) Count(x interface{}) int {
 	res := 0
 	for _, value := range list.Values {
 		if value == x {
-			// Where a is the slice, and i is the index of the element you want to delete:
 			res++
 		}
 	}
@@ -142,6 +152,18 @@ func (list *List) Copy() List {
 	// process a deepcopy
 	res.Values = make([]interface{}, len(list.Values))
 	copy(res.Values, list.Values)
+	return res
+}
+
+// CountDeep how many item in a list. This method will return the number of the values if exist, otherwise, it will return 0
+func (list *List) CountDeep(x interface{}) int {
+	// find value of x
+	res := 0
+	for _, value := range list.Values {
+		if reflect.DeepEqual(value, x) {
+			res++
+		}
+	}
 	return res
 }
 

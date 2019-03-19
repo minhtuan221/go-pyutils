@@ -3,6 +3,7 @@ package pylist
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 
 	"github.com/minhtuan221/go-pyutils/pyutils/tryexcept"
 )
@@ -77,6 +78,17 @@ func (dict *Dict) ToJSON() string {
 	return string(data)
 }
 
+// ContainDeep find item by item using DeepEqual. This method will return the index of the first value if exist, otherwise, it will return ""
+func (dict Dict) ContainDeep(x interface{}) string {
+	// find value of x
+	for key, value := range dict.Values {
+		if reflect.DeepEqual(value, x) {
+			return key
+		}
+	}
+	return ""
+}
+
 // Len = return the lenght of value
 func (dict Dict) Len() int {
 	return len(dict.Values)
@@ -85,9 +97,8 @@ func (dict Dict) Len() int {
 // Contain find item by item. This method only check basic value type => will not work with pointer
 func (dict Dict) Contain(x interface{}) bool {
 	// find value of x
-	for key := range dict.Values {
-		if key == x {
-			// Where a is the slice, and i is the index of the element you want to delete:
+	for _, value := range dict.Values {
+		if value == x {
 			return true
 		}
 	}

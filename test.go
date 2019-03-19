@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	. "github.com/minhtuan221/go-pyutils/pyutils/Pylist"
+	python "github.com/minhtuan221/go-pyutils/pyutils/Pylist"
 	genericlist "github.com/minhtuan221/go-pyutils/pyutils/genericList"
 	"github.com/minhtuan221/go-pyutils/pyutils/tryexcept"
 
@@ -12,7 +12,7 @@ import (
 
 func main() {
 	defer fmt.Println("Your test is here: ")
-	var x List
+	var x python.List
 	// = PyList.List{}
 	// fmt.Println(x)
 	for _, value := range []int{5, 6, 7, 8, 9} {
@@ -29,7 +29,7 @@ func main() {
 	fmt.Println("Start of test list String: ")
 	genericlist.TestString()
 	fmt.Println("Start of test Dict: ")
-	TestDict()
+	python.TestDict()
 	fmt.Println("Start of test TryCatch: ")
 	// cfg, err := ini.Load("config.ini")
 	// if err != nil {
@@ -79,6 +79,8 @@ func main() {
 			fmt.Println("This is finally")
 		},
 	}.Do()
+
+	fmt.Println("Start of test Keyword arguments: ")
 	// decorator
 	// blockchain.PrettyPrint(balance)
 }
@@ -90,7 +92,7 @@ func TestList() {
 		interfaceSlice[i] = d
 	}
 	// x := List{}
-	x := NewList()
+	x := python.NewList()
 	// fmt.Println(x)
 	for _, value := range []int{5, 6, 7, 8, 9} {
 		x.Append(value)
@@ -119,7 +121,7 @@ func TestList() {
 
 	fmt.Println(x.Count(9))
 	fmt.Println(x.Len())
-	fmt.Println("If key 9 in:", IfKeyIn(9, x))
+	fmt.Println("If key 9 in:", python.IfKeyIn(9, x))
 
 	// x.Sort()
 	// fmt.Println(x)
