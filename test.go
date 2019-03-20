@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	python "github.com/minhtuan221/go-pyutils/pyutils/Pylist"
 	genericlist "github.com/minhtuan221/go-pyutils/pyutils/genericList"
+	python "github.com/minhtuan221/go-pyutils/pyutils/pyList"
 	"github.com/minhtuan221/go-pyutils/pyutils/tryexcept"
 
 	ini "gopkg.in/ini.v1"
