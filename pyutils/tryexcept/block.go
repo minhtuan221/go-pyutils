@@ -6,20 +6,43 @@ import (
 	"github.com/pkg/errors"
 )
 
+// Try basic/root struct of try/except
 type Try struct {
 	Try     func()
-	Except  func(Exception)
+	Except  func(interface{})
 	Finally func()
+	Err     interface{}
 }
 
-type Exception interface{}
+// TryThrowError try a function and throw error to out side. Example,
+/* how to use it:
+	```your above code
+	userP := &pb.User{}
+	tryexcept.TryThrowError(func() {
+		userToProto(user, userP)
+	})
+	return userP```
+You can print full traceback with fmt.Printf("%+v\n", err). TryThrowError will print error to stderr by default
+*/
+func TryThrowError(try func()) error {
+	var err error
+	except := func(e interface{}) {
+		err = Traceback(e)
+		fmt.Printf("%+v\n", err)
+	}
+	just := &Try{try, except, nil, nil}
+	just.Do()
+	return err
+}
 
-func Throw(up Exception) {
+// Throw simillar to panic
+func Throw(up interface{}) {
 	panic(up)
 }
 
-func (tcf Try) Do() bool {
-	is_ok := true
+// Do execute function try on Try
+func (tcf Try) Do() (bool, interface{}) {
+	isOk := true
 	if tcf.Finally != nil {
 
 		defer tcf.Finally()
@@ -28,21 +51,29 @@ func (tcf Try) Do() bool {
 		defer func() {
 			if r := recover(); r != nil {
 				tcf.Except(r)
-				is_ok = false
+				isOk = false
+				tcf.Err = r
 			}
 		}()
 	}
 	tcf.Try()
-	return is_ok
+	return isOk, tcf.Err
 }
 
-func Traceback(e Exception) error {
+// Traceback return err with full stack trace
+func Traceback(e interface{}) error {
 	err, exp := e.(error)
 	if !exp {
 		panic("Uncatchable Error: Error while converting interface into error object in traceback function")
 	}
 	traceback := errors.WithStack(err)
 	return traceback
+}
+
+// GetTraceBack return full traceback as a string
+func GetTraceBack(e interface{}) string {
+	err := Traceback(e)
+	return fmt.Sprintf("%+v\n", err)
 }
 
 type Keywords struct {
@@ -60,25 +91,4 @@ func (kw *Keywords) Get(i uint, defaultValue interface{}) interface{} {
 // OptionArgs function create keyword arguments
 func OptionArgs(Val ...interface{}) *Keywords {
 	return &Keywords{Val}
-}
-
-func main() {
-	fmt.Println("We started")
-	x := Try{
-		Try: func() {
-			fmt.Println("I tried")
-			// float64("abc")
-		},
-		Except: func(e Exception) {
-			fmt.Printf("Caught %v\n", e)
-		},
-		Finally: func() {
-			fmt.Println("Finally...")
-		},
-	}.Do()
-	fmt.Println("Response", x)
-	fmt.Println("We went on")
-	// var testUint uint
-	// testUint = 0
-	// fmt.Println(testUint)
 }

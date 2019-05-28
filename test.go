@@ -71,9 +71,10 @@ func main() {
 			cfg, _ := ini.Load("confie.ini")
 			fmt.Println("App Mode:", cfg.Section("env").Key("host").String())
 		},
-		Except: func(e tryexcept.Exception) {
+		Except: func(e interface{}) {
 			fmt.Printf("%+v\n", tryexcept.Traceback(e))
 			fmt.Println("Error have been captured")
+
 		},
 		Finally: func() {
 			fmt.Println("This is finally")
